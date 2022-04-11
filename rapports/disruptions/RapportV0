@@ -1,0 +1,127 @@
+\documentclass[
+	12pt, % Default font size, values between 10pt-12pt are allowed
+	%letterpaper, % Uncomment for US letter paper size
+	%spanish, % Uncomment for Spanish
+]{fphw_assignment_toc}
+
+\usepackage{my_packages}
+\usepackage{graphicx}
+\usepackage{pgfgantt}
+%------------------------------------------------------------------------------------
+
+
+\title{Project report M1:}        % Assignment title
+\author{SCHUFFENECKER Antoine}    % Student name
+\roll{Intern}                    % Class roll
+\class{Master 1 Csmi}              % Class
+\session{2020/2021}             % Session
+\email{antoine.schuffenecker@gmail.com}
+\date{23/08}        % Due date
+\institute{}              % Institute or school name
+\course{PROJET}                            % Course or course name
+\professor{Cristhophe PRUD'HOMME}            % Professor or teacher in charge of the assignment
+
+%------------------------------------------------------------------------------------
+\addbibresource{ref.bib} 
+
+\setcounter{secnumdepth}{-2} 
+%\renewcommand{\thesection}{}  % https://tex.stackexchange.com/a/30202/114006
+%------------------------------------------------------------------------------------
+\begin{document}
+\maketitle
+\pagenumbering{gobble}           % to remove the page numbering
+\newpage
+\pdfbookmark[section]{\contentsname}{toc}
+\tableofcontents
+\newpage
+\pagenumbering{arabic}          % to start the page numbering
+
+%-----------------------------------------
+
+\section{\large\bf I) Introduction~}
+\subsubsection{\large\bf1.Context:}
+
+The students of STAPS takes physical tests when they arrive the first year in the cursus. These tests are organised around 4 core notions : Strength, Speed, Coordination and Endurance. The results of these test gives a grade. The sport has a great
+influence on health. This set of data can help the public health organisation because studies have shown that risks of diseases such as cancer, diabetes,etc, are reduce by a good physical condition. Such condition can be attained by physical activities like sport and a fine lifestyle is often due to people starting theses habits at a young age.
+The common trend is to say that performances
+are worse every year which might not be true. However the Covid happened and with it a lot of students could not practice any sport for long periods of time. 
+
+
+There are at the moment 2 datasets:
+
+
+- One from a collect of 15 years students in the college of bas-rhin in 2009, roughly 1000 results.
+
+- The whole results of all STAPS students since 1999, roughly 20000 results.
+
+\\
+\\
+\\
+\subsubsection{\large\bf 2.Supervisors:}
+
+
+My supervisor is Christophe Schnitzler. Expert in physical mobility, formation of teachers and Education to healthcare by sport.
+\\
+\\
+\\
+\subsubsection{\large\bf 3.Subject:}
+
+
+-Identify various cluster in the data which which are profiles of sportive ( like a football player) to then try to predict which sport is the major sport of a student and also try to find others sport in which the student could perform at a high level.
+
+-Searching for an temporal evolution in the results of the tests, such as an improvement in strength and decrease in endurance, to predict the trend of the in the changes of the results.   
+
+-Try to quantify the impact of the covid on the performances of the students.
+
+
+\\
+\\
+\newpage
+
+\section{\large\bf II) Organisation~}
+\subsubsection{\large\bf 1.Roadmap: }
+Goals:
+\\
+\\
+
+- Cleaning and pre-process all the data.
+\\
+\\
+
+- Find a way to show the results in a meaningfull manner.
+\\
+\\
+
+
+\begin{ganttchart}{1}{18}
+	\gantttitle{2022}{18} \\
+	\gantttitlelist{1,...,18}{1} \\
+
+	\ganttgroup{Be familiar with the subject}{1}{4} \\ % elem0
+	\ganttbar{Read the documentation}{1}{4} \\ % elem1
+	\ganttbar{Gettig use to the data}{2}{4} \\ % elem2
+	\ganttmilestone{Review 1}{4} \\ % elem3
+	\ganttlink{elem1}{elem3}
+	\ganttlink{elem2}{elem3}
+
+	\ganttgroup{Coding}{3}{14} \\ % elem4
+	\ganttbar{Manipulate and exploit the data}{3}{12} \\ % elem5
+	\ganttbar{Opening and verification}{8}{14} \\ % elem6
+	\ganttmilestone{Review 2}{12} \\ % elem7
+	\ganttlink{elem5}{elem6}
+	\ganttlink{elem6}{elem7}
+	
+	\ganttgroup{Presenting the results}{12}{18} \\ % elem8
+	\ganttbar{Search for appropriate way to display}{12}{14} \\ % elem9
+	\ganttbar{Writing rapport}{14}{16} \\ % elem10
+	\ganttmilestone{Final Review}{17} \\ % elem11
+
+	\ganttmilestone{Fin}{18} % elem12
+	\ganttlink{elem11}{elem12}
+	\ganttlink{elem9}{elem10}
+	\ganttlink{elem3}{elem5}
+	\ganttlink{elem7}{elem9}
+	\ganttlink{elem10}{elem11}
+\end{ganttchart}
+
+\end{document}
