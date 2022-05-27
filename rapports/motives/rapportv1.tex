@@ -6,7 +6,7 @@
 \usepackage{listings}
 \usepackage{graphicx}
 \usepackage{pgfgantt}
-
+\usepackage{url}
 \UseRawInputEncoding
 \usepackage{cite}
 \usepackage{mathptmx}
@@ -75,32 +75,21 @@
 \tableofcontents
 
 \section{Introduction}
-La pratique régulière d’activités physiques comporte de nombreux bénéfices et 
-il apparaît primordial d’encourager le maintien de celle-ci chez les jeunes en développement (Janssen & LeBlanc, 2010 ; Tremblay et al., 2011).
-Néanmoins, on observe un déclin de la pratique d’activités physiques au cours de l’adolescence . (Garriguet & Colley, 2012 ; Keating, Guan, Piñero, & Bridges, 2005). 
+La pratique régulière d’activités physiques comporte de nombreux bénéfices tel 
+qu' une amélioration de la santé mentale ,la prévention des maladies cardiovasculaire , limiter la prise  de poids et bien d'autres . 
 
-Afin augmenter leur activité physique ,  ce projet tentera de  déterminer leur niveau de motivation ou centre d'intérêt
-pour leur proposer une activité physique qu'il aime .
-
-
-
-Regular physical activity has many benefits and it is essential to encourage its maintenance in 
-It seems essential to encourage the maintenance of physical activity among developing youth (Janssen & LeBlanc, 2010; Tremblay et al., 2011).
-Nevertheless, there is a decline in physical activity during adolescence. (Garriguet & Colley, 2012; Keating, Guan, Piñero, & Bridges, 2005). 
-
-In order to increase their physical activity, this project will attempt to determine their level of motivation or interest
-to offer them a physical activity that they enjoy.
+Cependant, on observe un déclin de la pratique d’activités physiques.
+il apparaît primordia d’encourager les jeunes à maintenir une activité physique ou devenir plus actif , c'est dans cette optique que s'inscrit ce projet . 
 
 
 
+\subsection{Sport et sciences sociales}
 
-%%%% partie a part %%%
+Créée en 1979 par Bernard Michon à Strasbourg ,l’unité de recherche Sport et sciences sociales
+demeure la seule unité de recherche STAPS du Grand Est et est reconnue comme une structure de recherche incontournable  en sciences sociales du sport dans le paysage français et européen.
+Regroupant plus de 20 chercheurs (titulaires et associés) et 17 doctorants, elle réalise  des	ouvrages	et	des	articles de	référence (plus	de	174	publications).
 
-Motivation is an essential parameter for the engagement of young people in voluntary physical activity or sport. Traditionally, the level of motivation is measured by questionnaires which are restrictive to fill in. In connection with the University of Lille, an application has been developed to identify the type of motivation on a more functional mode. 
 
-
-\section{ Objective}
-\subsection{STAPS university}
 
 \subsection{Main Objectives}
 
@@ -443,46 +432,155 @@ The cluster 3 is made of individuals sharing :
  
  Nous avons séparer nos données en 3 parties :
 - 80 \% des données pour le choix de l'algorithme de sélection .
-- 20 \% des données pour tester le modele finale .
+- 20 \% des données pour tester le modele finale et éventuellement sélectionner les colonnes les plus importantes.
 
 \subsection{Choice of Classification algorithm} 
 
+ 4 multiclass classifiers used : Supporting Vector Classifier
+(SVC), Linear Supporting Vector Classifier
+(LSVC), k-nearest neighbors 
+(KNN) and  Logistic regression(logreg).
 
+voici le graphique de la  performance de chaque modèle : 
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.6]{learning_curve_1.png} 
+\caption[]{ KNN \ learning \ curve }
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.6]{learning_curve_2.png} 
+\caption[]{ logreg \ learning \ curve }
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.6]{learning_curve_3.png} 
+\caption[]{ LSVC \ learning \ curve }
+\end{center}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.6]{learning_curve_4.png} 
+\caption[]{ SVC \ learning \ curve }
+\end{center}
+\end{figure}
+
+
+
+D'après les graphiques ci- dessous , la performance ou modele de lostigic Regression et SVC soit plus stable et meilleur que les autres modèles. On peut dire que les deux modèle ne sont pas en overfiting
+(score train et score val sont proches) contrairement aux 2 autres.
+
+
+Nous avons utliser  GridSearchCV pour optimser les hyperparametres du modele  logistic Regression. 
+GridSearchCV nous permet de les meilleurs hyperpametre en comparant les différents performances 
+ de chaque combinaison grâce a la technique de cross-validation.
+
+La cross-validation consiste découper le jeu de données en k parties égales  ( ici k = 5). Tour à tour, chacune des k parties est utilisée comme jeu de test. Le reste (autrement dit, l’union des k-1 autres parties) est utilisé pour l'entraînement.
+
+  
+  
 \subsection{Feature selection} 
 
 
-
-\setlength{\parindent}{0pt} Les donnees de validation serviront pour suprimer les valeurs a faible variance et  le seuil a ete fixe à 0.05 .
-
-\setlength{\parindent}{0pt} Voici la commande utiliser pour la réaliser : 
-
-\begin{lstlisting}
-# elemination des colonnes a variances inferieur au seuil 0.1 ou 0.05
-selector = VarianceThreshold(threshold=0.05)
-selector.fit_transform(X_valid)
-columns_selected = np.array(X_val.columns)[selector.get_support()] 
-print(columns_selected)
-\end{lstlisting}
-En ce qui concerne les données de test 
+Le graphique ci- dessous nous montre la variance de chaque features , nous avons constatons 4 valeurs 
+remarquables 0.8 ou 0.06 ou 0.04 ou 0.02 qui pourront être le seuil .
 
 
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.6]{barlot.png}
+\caption[]{ variance\ of \ each \ features}
+\end{center}
+\end{figure}
 
-\subsection{Results of Classification} 
-. presentation des resultats
+Pour éliminer les valeurs inférieur à ce seuil , La fonction VarianceThreshold de scikit-learn a été utilisé.
 
 
-\section{Results and Conclusion}
+Au final, le seuil fixé à 0.02 donne de meilleur résultats. Aucun  colonnes n'a été suprimée . 
 
+\subsection{Results final model} 
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.6]{confusion_matrix_1.png} 
+\caption[]{  confusion \ matrix }
+\end{center}
+\end{figure}
+
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.6]{confusion_matrix_2.png} 
+\caption[]{confusion \ matrix}
+\end{center}
+\end{figure}
+
+9 valeurs a été mal placées , le  recall\_score =  0.9640336366142818
+
+ et f1-score =  0.9476814440703328
+
+
+\section{Conclusion}
+L'objectif principal du projet était de faire du  clustering sur nos données.
+Grace au clustering HCPC , nous pouvons distinguer 3 types d'étudiants :
+
+- les démotivés , ceux qui recherchent le bien-être et la simplicité dont certaines variables caractéristiques du cluster sont :  Culpabilite, Ennuyeux,  Decouragement, Ralentissement, Inconfort 
+
+- Dans le deuxième groupe , on a ceux qui aiment les sports de combat comme la lutte, la boxe le MMA. il est caractérisé par ses mots : Puissance, Competition, Technicite, Qualite, Energie, Muscle, Force and Intensite 
+
+- Le dernier groupe  se distingue par ses mots : Pro
+gression, Performance, Challenge, Cardio, Partage, Depassement, Rapide and Efficacite. 
+On retrouve ceux qui apprécient la course à pied et les activité de nature . 
+
+En ce qui concerne la classification ,L'un des meilleur algorithme (SVM) a donné la valeur 0,722 de précision, 1,000 de rappel et 0,839 de FMeasure.(Par contre, l'ensemble de données de ce projet n'est pas assez grand.)
 
 \begin{thebibliography}{9}
 
+\bibitem{text}
+\url{https://www.cairn.info/revue-staps-2018-2-page-99.htm}
 
 \bibitem{text}
-https://scikit-learn.org/stable/index.html
+
+\url{https://solidarites-sante.gouv.fr/prevention-en-sante/preserver-sa-sante/article/activite-physique-et-sante}
+
+\bibitem{text}
+\url{https://e3s.unistra.fr/equipe/presentation/}
+
+\bibitem{text}
+\url{https://scikit-learn.org}
+
+\bibitem{}
+\url{https://fr.wikipedia.org/wiki/Analyse_en_composantes_principales}
 
 
+\bibitem{text}
+\url{http://www.sthda.com/english/}
 
+\bibitem{text}
+\url{http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/117-hcpc-hierarchical-clustering-on-principal-components-essentials/#algorithm-of-the-hcpc-method}
+
+
+\bibitem{text}
+\url{https://husson.github.io/teaching.html}
+
+
+\bibitem{text}
+\url{https://www.youtube.com/c/MachineLearnia}
+
+\bibitem{text}
+\url{}
 
 \end{thebibliography}
+
+
 
 \end{document}
