@@ -276,7 +276,7 @@ The HCPC method algorithm has 4 main steps:
 
 %% suprimer ligne code ??
 
-Voici les lignes de codes principales dans Rstudio pour :
+Here are the main lines of code in Rstudio for the implementation:
 
 \begin{lstlisting}
 
@@ -359,6 +359,8 @@ Cluster 3 consists of individuals who share:
 (LSVC), k-nearest neighbors (KNN) and logistic regression (logreg). 
 (KNN) and logistic regression (logreg).
 
+\vspace{0.4 cm}
+
 Here is the graph of the performance of each model: 
 
 
@@ -409,8 +411,9 @@ GridSearchCV allows us to select the best hyperparameters by comparing the diffe
   
 \subsection{Feature selection} 
 
-The graph below shows the variance of each feature. 
- 4 threshold candidates stand out: 0.8 , 0.06 , 0.04 and 0.02.
+
+\noindent The graph below shows the variance of each feature. 
+ 4 threshold candidates stand out: 0.8, 0.06, 0.04 and 0.02.
 
 
 
@@ -421,16 +424,14 @@ The graph below shows the variance of each feature.
 \end{center}
 \end{figure}
 
-To eliminate the values below this threshold, the VarianceThreshold function of scikit-learn is used.
-
-In the end, the threshold set at 0.02 gives better results. No column was suppressed. 
+\noindent To eliminate the values below this threshold, the VarianceThreshold function of scikit-learn is used.In the end, the threshold set at 0.02 gives better results. No column was suppressed. 
 
 \subsection{Results final model} 
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.6]{confusion_matrix_1.png} 
-\caption[]{  confusion \ matrix }
+\caption[]{ confusion \ matrix }
 \end{center}
 \end{figure}
 
@@ -439,11 +440,11 @@ In the end, the threshold set at 0.02 gives better results. No column was suppre
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.6]{confusion_matrix_2.png} 
-\caption[]{confusion \ matrix}
+\caption[]{ image of confusion matrix  }
 \end{center}
 \end{figure}
 
-We obtain satisfactory results: 
+\noindent We obtain satisfactory results: 
 only 9 misplaced values, the value of 0.964 and 0.94768 for the recall\_score and the f1\-score.
 
 \section{Conclusion}
@@ -462,8 +463,7 @@ We find those who enjoy running and nature activities.
 
 \end{itemize}
 
-Regarding classification, one of the best algorithms (SVM) gave the value of 0.9549 of precision, 
-0.9 of recall and 0.9255 of f1-score.
+\noindent Regarding classification, one of the best algorithms (SVM) gave the value of 0.9549 of precision,0.9 of recall and 0.9255 of f1-score.
 
 
 \begin{thebibliography}{9}
