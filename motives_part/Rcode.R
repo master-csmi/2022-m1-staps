@@ -8,7 +8,21 @@ data <- read.csv("C:\\Users\\33783\\Desktop\\clustering.csv")
 
 
 
+
 data <- read.csv("C:\\Users\\33783\\Desktop\\test.csv",row.names = 1)
+
+data_boy <- read.csv("C:\\Users\\33783\\Desktop\\data_ready_boy.csv",row.names = 1)
+
+
+data_girl <- read.csv("C:\\Users\\33783\\Desktop\\data_ready_girl.csv",row.names = 1)
+
+
+data<- data_boy
+#data
+index_name <- rownames(data)
+#index_name
+
+data <- data_girl
 
 #head(data)
 
@@ -167,20 +181,36 @@ res.hcpc$desc.var
 
 
 # Description of the clusters by the individuals
-res.hcpc$desc.ind
+res.hcpc$desc.ind$para
+
+
+# centre clsuter
+res.hcpc$para
 
 
 
 
+# exportation fichier 
+
+col <- res.hcpc$data.clust[72]
+col
 
 
+rescol <- cbind(data_base,col,index_name)
+rescol
+
+write.csv(x = rescol, file = "girl.csv")
+
+write.csv(x = rescol, file = "boy.csv")
 
 
 
 
 install.packages("Factoshiny")
-install.packages('https://cran.rstudio.com/bin/windows/contrib/4.0/Factoshiny_2.4.zip', lib='C:/Users/33783/Documents/R/win-library/4.0',repos = NULL)
+install.packages('https://cran.rstudio.com/bin/windows/contrib/4.0/Factoshiny_2.4.zip',lib='C:/Users/33783/Documents/R/win-library/4.0',repos = NULL)
 library(Factoshiny)
+
+
 Factoshiny(data_base)
 
 res.pca <- PCA(data_base , ncp = 5 ,graph = TRUE)
