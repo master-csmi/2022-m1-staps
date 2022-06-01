@@ -34,7 +34,9 @@ For the execution of the project it is necessary to install the following module
 
 ## Organisation 
 The data Analysis and Classification folders contain 2 files: a file that creates python functions and methods and a test file that uses its functions to answer our problem.we find all our data in the file, the project report in reports.
-The clustering file shows the codes used in R for the clustering part of the project. 
+The clustering file shows the codes used in R for the clustering part of the project.
+Our test files allow us to reproduce the results obtained in the project.
+
 
 
 

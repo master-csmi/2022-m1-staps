@@ -34,7 +34,7 @@ def evaluation(model,X_train_3,y_train_3,X_test_3,y_test_3):
     plt.legend()
 
 
-# Optimisation des hyperparametres du modèle SVC et logistic
+# Optimisation des hyperparametres du modèle 
 def optimiseur(model,parameters,X_train_3,y_train_3):
     grid = GridSearchCV(model,parameters)
     grid.fit(X_train_3,y_train_3)
@@ -60,9 +60,9 @@ def selection_feature(X_test,X_train,seuil,col_total ):
     colonne_suprimer = [i for i in col_total if not  i in colonne_garder ]
 
     
-    print('colonne garder size = ',colonne_garder.shape)
+    # print('colonne garder size = ',colonne_garder.shape)
     # print('colonne suprimer size = ',len(colonne_suprimer))
-    print('colonne_garder = ',colonne_garder)
+    # print('colonne_garder = ',colonne_garder)
 
 
     # print('colonne_suprime = ',colonne_suprimer)

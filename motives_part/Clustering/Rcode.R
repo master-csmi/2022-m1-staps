@@ -1,39 +1,37 @@
-install.packages("FactoMineR")
-library(FactoMineR)
-install.packages('https://cran.rstudio.com/bin/windows/contrib/4.0/FactoMineR_2.4.zip', lib='C:/Users/33783/Documents/R/win-library/4.0',repos = NULL)
-
-
-
 data <- read.csv("C:\\Users\\33783\\Desktop\\clustering.csv")
 
+#------------------------------- lecture  des données 
 
+# -----------------------------------
 
-
-data <- read.csv("C:\\Users\\33783\\Desktop\\test.csv",row.names = 1)
+data <- read.csv("C:\\Users\\33783\\Desktop\\staps\\data_ready.csv",row.names = 1)
 
 data_boy <- read.csv("C:\\Users\\33783\\Desktop\\data_ready_boy.csv",row.names = 1)
-
-
 data_girl <- read.csv("C:\\Users\\33783\\Desktop\\data_ready_girl.csv",row.names = 1)
 
+#data<- data_boy
+#data <- data_girl
 
-data<- data_boy
-#data
-index_name <- rownames(data)
-#index_name
-
-data <- data_girl
 
 #head(data)
 
 data_base <- data[,0:71] 
-#head(data_base)
+head(data_base)
 
-#summary(data_base)
+
+
+#install.packages("FactoMineR")
+#install.packages('https://cran.rstudio.com/bin/windows/contrib/4.0/FactoMineR_2.4.zip', lib='C:/Users/33783/Documents/R/win-library/4.0',repos = NULL)
+
 library(FactoMineR)
 
+library("factoextra")
 
-############## Partie PCA ########
+
+
+#------------------------------------------------------ Partie PCA 
+
+#------------------------------------------------------ 
 
 res.pca <- PCA(data_base ,graph = TRUE)
 print(res.pca)
@@ -43,43 +41,32 @@ summary(res.pca)
 # Visualisation et interprétation
 
 # Valeurs propres / Variances
-library("factoextra")
+
 eig.val <- get_eigenvalue(res.pca)
 eig.val
 
 fviz_eig(res.pca, addlabels = TRUE, ylim = c(0, 50))
 
-# D'après le graphique ci-dessus, nous pourrions vouloir nous 
-# arrêter à la cinquième composante principale () car la variation est plus faible ).
-# Cependant 39.79760% des informations (variances) contenues 
-# dans les données sont retenues par les 5  premières composantes principales.
+
 
 
 # Resultas de la PCA 
-var <- get_pca_var(res.pca)
-var
-# Contributions des variables aux PC
 
+# Contributions des variables aux PC
+var <- get_pca_var(res.pca)
 head(var$contrib,10)
 
 
-# Contributions of variables to PC1  #  top = 35 - 40
+# Contributions of variables to PC1,PC2,PC3,PC4,PC5 top = 35 
 fviz_contrib(res.pca, choice = "var", axes = 1, top = 35) 
-
-# Contributions of variables to PC2  #  top = 35 - 40
 fviz_contrib(res.pca, choice = "var", axes = 2, top = 35) 
-
-# Contributions of variables to PC3  #  top = 35 - 40
 fviz_contrib(res.pca, choice = "var", axes = 3, top = 35) 
-
-# Contributions of variables to PC4  #  top = 35 - 40
 fviz_contrib(res.pca, choice = "var", axes = 4, top = 35) 
-
-# Contributions of variables to PC5  #  top = 35 - 40
 fviz_contrib(res.pca, choice = "var", axes = 5, top = 35) 
 
 
-## les variables garder 
+
+## les variables garder  lors de la PCA
 donne = var$contrib
 dim1  <- donne[,1]
 dim2  <- donne[,2]
@@ -128,38 +115,24 @@ reste <- col %in% col_keep
 print(col[col %in% col_keep == FALSE])
 
 
-######## K-mean clustering #########
-library(factoextra)
-data_good <- data_base[,col_keep]
-res.km <- kmeans(data_good, centers = 3)
-print(res.km)
 
-# Cluster size
-res.km$size
-
-# Cluster means
-res.km$centers
-
-fviz_cluster(res.km, data_good )
-
-
-
-
-
-###### Hierachical clustering #######
+#------------------------------------------------------  Hierachical clustering 
 res.pca<- PCA(data_base ,graph = FALSE, ncp = 5)
 res.hcpc <- HCPC(res.pca,nb.clust=3,consol=FALSE,graph=TRUE)
 
 
 library(factoextra)
+
+# resultats  du dendogram avant de faire le cluster
 fviz_dend(res.hcpc, 
-          cex = 0.7,                    
+          cex = 0.5,                    
           palette = "jco",               
           rect = TRUE, rect_fill = TRUE, 
           rect_border = "jco",           
-          labels_track_height = 0.8 )
+          labels_track_height = 0.5 )
 
 
+# mise en oeuvre du cluster pas trop différent du dendogram
 fviz_cluster(res.hcpc,repel = TRUE,            
              show.clust.cent = TRUE, 
              palette = "jco",         
@@ -184,39 +157,31 @@ res.hcpc$desc.var
 res.hcpc$desc.ind$para
 
 
-# centre clsuter
-res.hcpc$para
+# nombre de personne dans chaque cluster
+library(plyr)
+count(res.hcpc$data.clust,'clust')
+
+#----------------------------------------------- exportation fichier pour la classification
+
+# ------------------------------------------------  
+
+# ajout d'un identifiant
+index_name <- rownames(data)
+index_name
 
 
 
-
-# exportation fichier 
-
-col <- res.hcpc$data.clust[72]
-col
+# ajout de la colonne cluster
+cluster <- res.hcpc$data.clust[72]
+cluster
 
 
-rescol <- cbind(data_base,col,index_name)
-rescol
-
-write.csv(x = rescol, file = "girl.csv")
-
-write.csv(x = rescol, file = "boy.csv")
+newdf <- cbind(data_base,cluster,index_name)
+newdf
 
 
+write.csv(x = newdf, file = "girl.csv")
 
+write.csv(x = newdf, file = "boy.csv")
 
-install.packages("Factoshiny")
-install.packages('https://cran.rstudio.com/bin/windows/contrib/4.0/Factoshiny_2.4.zip',lib='C:/Users/33783/Documents/R/win-library/4.0',repos = NULL)
-library(Factoshiny)
-
-
-Factoshiny(data_base)
-
-res.pca <- PCA(data_base , ncp = 5 ,graph = TRUE)
-hc <- HCPC(res.pca,nb.clust=3,consol=FALSE,graph=TRUE)
-
-plot(hc,choice = "tree")
-plot(hc,choice = "map", draw.tree = FALSE)
-plot(hc,choice = "3D.map")
-catdes(hc$data.clust,ncol(hc$data.clust))
+write.csv(x = newdf, file = "clusering.csv")

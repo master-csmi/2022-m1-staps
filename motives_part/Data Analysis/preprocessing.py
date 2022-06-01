@@ -26,6 +26,14 @@ def preprocessing(data):
     data_tmp[data < seuil] = data[data < seuil]
     data = data_tmp
     
+    #Supression des valeurs petite par rapport au seuil_inf
+    seuil_inf = 200
+    
+    data = np.array(data)
+    data_tmp = np.zeros_like(data)
+    data_tmp[data > seuil_inf] = data[data > seuil_inf]
+    data = data_tmp
+
     return data , data_correct
 
 
