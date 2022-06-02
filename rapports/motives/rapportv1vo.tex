@@ -218,6 +218,7 @@ The possible answers to each question are "yes", "no", "I don't know". When the 
 
 The missing values are set to zero assuming that the qualifier is not of interest to the students concerned and that they could have answered: "I don't know".
 For the management of the outliers, those which are higher than 5*standard deviation have been set to zero in order not to impact the weight given to each word. The standard deviation is calculated using the unsigned data in order to reduce the extreme values and avoid the possible compensation of the values.
+Values less than 200 ms are set to 0 assuming there is a minimum response time for each question.
 The students who answered "I don't know" to all these questions were not considered in the rest of the project.  
 The normalization is done by line in order to keep what is "important" for each person. 
 
